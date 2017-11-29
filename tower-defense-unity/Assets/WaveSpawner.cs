@@ -1,16 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WaveSpawner : MonoBehaviour {
-    public Transform EnemyPrefab;
+    public GameObject EnemyPrefab;
     public Transform SpawnPoint;
     public Text waveCountDownText;
+    public static List<GameObject> Enemies;
 
     public float timeBetweenWaves = 5f;
 
     private float countDown = 2f;
     private int waveIndex = 0;
+
+    private void Start()
+    {
+        Enemies = new List<GameObject>();
+    }
 
     private void Update()
     {
@@ -22,6 +29,7 @@ public class WaveSpawner : MonoBehaviour {
         countDown -= Time.deltaTime;
         waveCountDownText.text = Mathf.Round(countDown).ToString();
     }
+
     private IEnumerator SpawnWave()
     {
         waveIndex++;
@@ -31,8 +39,11 @@ public class WaveSpawner : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
         }
     }
+
     private void SpawnEnemy()
     {
-        Instantiate(EnemyPrefab, SpawnPoint.position, SpawnPoint.rotation);
+        var enemy = Instantiate(EnemyPrefab, SpawnPoint.position, SpawnPoint.rotation);
+        Enemies.Add(enemy);
+        enemy.GetComponent<Enemy>().DeathNotification = () => { Enemies.Remove(enemy); };
     }
 }
