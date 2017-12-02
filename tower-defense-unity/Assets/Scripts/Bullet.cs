@@ -40,6 +40,6 @@ public class Bullet : MonoBehaviour {
         var effect = Instantiate(impactEffect, transform.position, transform.rotation);
         Destroy(effect, 2f);
         Destroy(gameObject);
-        Destroy(target.gameObject);
+        target.GetComponent<Enemy>().DestroyEnemy();
     }
 }

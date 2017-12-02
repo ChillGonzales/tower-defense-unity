@@ -24,10 +24,7 @@ public class Enemy : MonoBehaviour {
         {
             if (wavepointIndex >= Waypoints.Points.Count - 1)
             {
-                // Publish death event
-                if (DeathNotification != null)
-                    DeathNotification();
-                Destroy(gameObject);
+                DestroyEnemy();
             }
             else
             {
@@ -35,5 +32,12 @@ public class Enemy : MonoBehaviour {
                 target = Waypoints.Points[wavepointIndex];
             }
         }
+    }
+
+    public void DestroyEnemy()
+    {
+        if (DeathNotification != null)
+            DeathNotification();
+        Destroy(gameObject);
     }
 }
