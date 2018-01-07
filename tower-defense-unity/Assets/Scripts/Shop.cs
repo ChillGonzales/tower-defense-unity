@@ -1,22 +1,24 @@
-﻿using System.Collections;
+﻿using Assets.Models;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
+    public TurretBlueprint StandardTurret;
+    public TurretBlueprint MissileLauncher;
     private BuildManager _buildManager;
+
     private void Start()
     {
         _buildManager = BuildManager.Instance;
     }
-    public void PurchaseStandardTurret()
+    public void SelectStandardTurret()
     {
-        _buildManager.SetTurretToBuild(_buildManager.StandardTurretPrefab);
-        Debug.Log("Standard Turret Selected");
+        _buildManager.SelectTurretToBuild(StandardTurret);
     }
-    public void PurchaseMissileTurret()
+    public void SelectMissileLauncher()
     {
-        _buildManager.SetTurretToBuild(_buildManager.MissileTurretPrefab);
-        Debug.Log("Missile Turret Selected");
+        _buildManager.SelectTurretToBuild(MissileLauncher);
     }
 }
