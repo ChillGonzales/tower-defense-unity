@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class Node : MonoBehaviour
 {
     public Color HoverColor;
+    public Color NotEnoughMoneyColor;
     public Vector3 PositionOffset;
     [Header("Optional")]
     public GameObject Turret;
@@ -43,8 +44,12 @@ public class Node : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
-        if (_buildManager.CanBuild)
+        if (!_buildManager.CanBuild)
+            return;
+        if (_buildManager.HasEnoughMoney)
             _renderer.material.color = HoverColor;
+        else
+            _renderer.material.color = NotEnoughMoneyColor;
     }
 
     private void OnMouseExit()
